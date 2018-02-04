@@ -26,7 +26,7 @@ namespace Lotto_Checker
 		{
 
 			zaklady = Zaklady.wczytaj_zaklady(); //wczytanie zapisanych zakladow uzytkownika
-			foreach (Zaklad zaklad in zaklady.Myzaklady) zakladyCLB.Items.Add(zaklad.Zakladstr); //wrzucenie listy do checkedlistboxa
+			foreach (Zaklad zaklad in zaklady.Myzaklady) zakladyCLB.Items.Add(zaklad.Zakladstr,true); //wrzucenie listy do checkedlistboxa
 
 
 		}

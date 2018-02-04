@@ -26,7 +26,7 @@ namespace Lotto_Checker
 		{
 
 			zaklady = Zaklady.wczytaj_zaklady(); //wczytanie zapisanych zakladow uzytkownika
-			foreach (Zaklad zaklad in zaklady.Myzaklady) zakladyCLB.Items.Add(zaklad.Zakladstr,true); //wrzucenie listy do checkedlistboxa
+			foreach (Zaklad zaklad in zaklady.Myzaklady) zakladyCLB.Items.Add(zaklad.Zakladstr, true); //wrzucenie listy do checkedlistboxa
 
 
 		}
@@ -79,29 +79,31 @@ namespace Lotto_Checker
 			try
 			{
 				int lbiteracji = zakladyCLB.CheckedItems.Count;
-				int[] cowlotku = new int[lbiteracji];
-				int[] cowlotkuplus = new int[lbiteracji];
 
 
-				for (int j = 0; j < lbiteracji; j++)
+
+
+				List<Zaklad> checkedList = new List<Zaklad>();
+
+				for (int i = 0; i < lbiteracji; i++)
 				{
-					for (int i = 0; i < zaklady.Myzaklady.Count; i++)
+					checkedList.AddRange(zaklady.Myzaklady.Where(x => x.Zakladstr.Equals(zakladyCLB.CheckedItems[i])));
+				}
+
+				for (int i = 0; i < checkedList.Count; i++)
+				{
+					int[] cowlotku = new int[checkedList.Count];
+					int[] cowlotkuplus = new int[checkedList.Count];
+
+					cowlotku[i] = Zaklady.porownaj(zaklady.Myzaklady[i].Typy, yellowball);
+					cowlotkuplus[i] = Zaklady.porownaj(zaklady.Myzaklady[i].Typy, blueball);
+					if (cowlotku[i] >= 0)
 					{
-						if (zakladyCLB.CheckedItems.Count <= 0) break;
-						if (zaklady.Myzaklady[i].Zakladstr == zakladyCLB.CheckedItems[0].ToString())
-						{
-							//zakladyCLB.SetItemChecked(zakladyCLB.Items.IndexOf(zakladyCLB.CheckedItems[0]), false);
-							cowlotku[j] = Zaklady.porownaj(zaklady.Myzaklady[i].Typy, yellowball);
-							cowlotkuplus[j] = Zaklady.porownaj(zaklady.Myzaklady[i].Typy, blueball);
-							if (cowlotku[j] >= 0)
-							{
-								wynikiTB.Text += ("W zestawie " + zaklady.Myzaklady[i].Zakladstr + " masz " + cowlotku[j] + " w lotto." + "\n");
-							}
-							if (cowlotkuplus[j] >= 0)
-							{
-								wynikiTB.Text += ("W zestawie " + zaklady.Myzaklady[i].Zakladstr + " masz " + cowlotkuplus[j] + " w lotto+." + "\n");
-							}
-						}
+						wynikiTB.Text += ("W zestawie " + zaklady.Myzaklady[i].Zakladstr + " masz " + cowlotku[i] + " w lotto." + "\n");
+					}
+					if (cowlotkuplus[i] >= 0)
+					{
+						wynikiTB.Text += ("W zestawie " + zaklady.Myzaklady[i].Zakladstr + " masz " + cowlotkuplus[i] + " w lotto+." + "\n");
 					}
 				}
 			}

@@ -208,8 +208,6 @@
         private System.Windows.Forms.Button downloadBT;
         private System.Windows.Forms.Label infoLB1;
         private System.Windows.Forms.CheckedListBox zakladyCLB;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button dodajzakladBT;
         private System.Windows.Forms.Button sprawdzzaznaczoneBT;
         private System.Windows.Forms.Button usunzaznaczoneBT;

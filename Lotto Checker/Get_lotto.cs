@@ -26,13 +26,13 @@ namespace Lotto_Checker
             yellowball = new int[6];
             blueball = new int[6];
             int lotto_pos = data.IndexOf("sortrosnaco");
-            int plus_pos = data.IndexOf("lottoplus sortrosnaco");
+            int plus_pos = data.IndexOf("lottoPlus sortrosnaco");
 
             for (int i = 0; i < 6; i++)
             {
-                yellowpos[i] = data.IndexOf("wynik_lotto", lotto_pos);
+                yellowpos[i] = data.IndexOf("<span>", lotto_pos) +6;
                 lotto_pos = yellowpos[i] + 1;
-                bluepos[i] = data.IndexOf("wynik_lotto", plus_pos);
+                bluepos[i] = data.IndexOf("<span>", plus_pos) +6;
                 plus_pos = bluepos[i] + 1;
             }
 
@@ -42,20 +42,20 @@ namespace Lotto_Checker
             {
                 try
                 {
-                    yellowball[i] = int.Parse(data[yellowpos[i] + 13].ToString() + data[yellowpos[i] + 14].ToString());
+                    yellowball[i] = int.Parse(data[yellowpos[i]].ToString() + data[yellowpos[i] + 1].ToString());
                 }
                 catch
                 {
 
-                    yellowball[i] = int.Parse(data[yellowpos[i] + 13].ToString());
+                    yellowball[i] = int.Parse(data[yellowpos[i]].ToString());
                 }
                 try
                 {
-                    blueball[i] = int.Parse(data[bluepos[i] + 13].ToString() + data[bluepos[i] + 14].ToString());
+                    blueball[i] = int.Parse(data[bluepos[i]].ToString() + data[bluepos[i] + 1].ToString());
                 }
                 catch
                 {
-                    blueball[i] = int.Parse(data[bluepos[i] + 13].ToString());
+                    blueball[i] = int.Parse(data[bluepos[i]].ToString());
                 }
 
             }

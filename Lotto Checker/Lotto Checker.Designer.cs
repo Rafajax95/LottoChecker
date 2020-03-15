@@ -31,7 +31,7 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.wynikiMSK = new System.Windows.Forms.MaskedTextBox();
 			this.wynikiplusMSK = new System.Windows.Forms.MaskedTextBox();
-			this.LottoLB = new System.Windows.Forms.Label();
+			this.LottoLB1 = new System.Windows.Forms.Label();
 			this.lottoplusLB = new System.Windows.Forms.Label();
 			this.downloadBT = new System.Windows.Forms.Button();
 			this.infoLB1 = new System.Windows.Forms.Label();
@@ -61,10 +61,10 @@
 			// 
 			// LottoLB
 			// 
-			resources.ApplyResources(this.LottoLB, "LottoLB");
-			this.LottoLB.BackColor = System.Drawing.Color.Transparent;
-			this.LottoLB.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-			this.LottoLB.Name = "LottoLB";
+			resources.ApplyResources(this.LottoLB1, "LottoLB");
+			this.LottoLB1.BackColor = System.Drawing.Color.Transparent;
+			this.LottoLB1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+			this.LottoLB1.Name = "LottoLB";
 			// 
 			// lottoplusLB
 			// 
@@ -185,7 +185,7 @@
 			this.Controls.Add(this.infoLB1);
 			this.Controls.Add(this.downloadBT);
 			this.Controls.Add(this.lottoplusLB);
-			this.Controls.Add(this.LottoLB);
+			this.Controls.Add(this.LottoLB1);
 			this.Controls.Add(this.wynikiplusMSK);
 			this.Controls.Add(this.wynikiMSK);
 			this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -203,7 +203,7 @@
 
         private System.Windows.Forms.MaskedTextBox wynikiMSK;
         private System.Windows.Forms.MaskedTextBox wynikiplusMSK;
-        private System.Windows.Forms.Label LottoLB;
+        private System.Windows.Forms.Label LottoLB1;
         private System.Windows.Forms.Label lottoplusLB;
         private System.Windows.Forms.Button downloadBT;
         private System.Windows.Forms.Label infoLB1;

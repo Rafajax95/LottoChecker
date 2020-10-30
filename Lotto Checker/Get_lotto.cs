@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
@@ -12,53 +13,27 @@ namespace Lotto_Checker
         static private HtmlWeb web;
         static private HtmlAgilityPack.HtmlDocument document;
 
-        public static void get_lotto(ref int[] yellowball, ref int[] blueball, ref string date)
-        {
-            web = new HtmlWeb();
-            document = web.Load("http://www.lotto.pl/lotto/wyniki-i-wygrane/ostatnie-wyniki");
-            string data = document.DocumentNode.OuterHtml;
-            int[] yellowpos = new int[6];
-            int[] bluepos = new int[6];
-            int datepos = data.IndexOf("</td><td>") + 22;
-            date = data.Substring(datepos, 20);
-            date = date.Remove(date.IndexOf("<"));
+		static private string yellowBallsXPath = @"(//div[@class='recent-result-item Lotto'])[1]//div[@class='scoreline-item circle']";
+		static private string blueBallsXPath = @"(//div[@class='recent-result-item LottoPlus'])[1]//div[@class='scoreline-item circle']";
 
-            yellowball = new int[6];
-            blueball = new int[6];
-            int lotto_pos = data.IndexOf("sortrosnaco");
-            int plus_pos = data.IndexOf("lottoPlus sortrosnaco");
+		public static void get_lotto(ref int[] yellowball, ref int[] blueball, ref string date)
+		{
+			web = new HtmlWeb();
+			document = web.Load("http://www.lotto.pl/lotto/wyniki-i-wygrane/ostatnie-wyniki");
+			yellowball = ExtractBallsFromGivenXPath(yellowBallsXPath).ToArray();
+			blueball = ExtractBallsFromGivenXPath(blueBallsXPath).ToArray();
 
-            for (int i = 0; i < 6; i++)
-            {
-                yellowpos[i] = data.IndexOf("<span>", lotto_pos) +6;
-                lotto_pos = yellowpos[i] + 1;
-                bluepos[i] = data.IndexOf("<span>", plus_pos) +6;
-                plus_pos = bluepos[i] + 1;
-            }
+		}
 
-
-
-            for (int i = 0; i < 6; i++)
-            {
-                try
-                {
-                    yellowball[i] = int.Parse(data[yellowpos[i]].ToString() + data[yellowpos[i] + 1].ToString());
-                }
-                catch
-                {
-
-                    yellowball[i] = int.Parse(data[yellowpos[i]].ToString());
-                }
-                try
-                {
-                    blueball[i] = int.Parse(data[bluepos[i]].ToString() + data[bluepos[i] + 1].ToString());
-                }
-                catch
-                {
-                    blueball[i] = int.Parse(data[bluepos[i]].ToString());
-                }
-
-            }
-        }
-    }
+		private static List<int> ExtractBallsFromGivenXPath(string xpath)
+		{
+			return document
+				.DocumentNode
+				.SelectNodes(xpath)
+				.Select(x => x.InnerText)
+				.Select(x => Regex.Match(x, @"\d+"))
+				.Select(x => int.Parse(x.Value))
+				.ToList();
+		}
+	}
 }

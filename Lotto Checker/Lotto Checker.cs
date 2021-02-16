@@ -78,32 +78,24 @@ namespace Lotto_Checker
 			wynikiTB.Text = "";
 			try
 			{
-				int lbiteracji = zakladyCLB.CheckedItems.Count;
 
-
-
-
-				List<Zaklad> checkedList = new List<Zaklad>();
-
-				for (int i = 0; i < lbiteracji; i++)
-				{
-					checkedList.AddRange(zaklady.Myzaklady.Where(x => x.Zakladstr.Equals(zakladyCLB.CheckedItems[i])));
-				}
+				var checkedListAsString = zakladyCLB.CheckedItems.Cast<string>().ToList();
+				List<Zaklad> checkedList = zaklady.Myzaklady.Where(x => checkedListAsString.Any(y => y.Equals(x.Zakladstr))).ToList();
 
 				for (int i = 0; i < checkedList.Count; i++)
 				{
 					int[] cowlotku = new int[checkedList.Count];
 					int[] cowlotkuplus = new int[checkedList.Count];
 
-					cowlotku[i] = Zaklady.porownaj(zaklady.Myzaklady[i].Typy, yellowball);
-					cowlotkuplus[i] = Zaklady.porownaj(zaklady.Myzaklady[i].Typy, blueball);
+					cowlotku[i] = Zaklady.porownaj(checkedList[i].Typy, yellowball);
+					cowlotkuplus[i] = Zaklady.porownaj(checkedList[i].Typy, blueball);
 					if (cowlotku[i] >= 0)
 					{
-						wynikiTB.Text += ("W zestawie " + zaklady.Myzaklady[i].Zakladstr + " masz " + cowlotku[i] + " w lotto." + "\n");
+						wynikiTB.Text += ("W zestawie " + checkedList[i].Zakladstr + " masz " + cowlotku[i] + " w lotto." + "\n");
 					}
 					if (cowlotkuplus[i] >= 0)
 					{
-						wynikiTB.Text += ("W zestawie " + zaklady.Myzaklady[i].Zakladstr + " masz " + cowlotkuplus[i] + " w lotto+." + "\n");
+						wynikiTB.Text += ("W zestawie " + checkedList[i].Zakladstr + " masz " + cowlotkuplus[i] + " w lotto+." + "\n");
 					}
 				}
 			}

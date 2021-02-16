@@ -22,7 +22,7 @@ namespace Lotto_Checker
 			document = web.Load("http://www.lotto.pl/lotto/wyniki-i-wygrane/ostatnie-wyniki");
 			yellowball = ExtractBallsFromGivenXPath(yellowBallsXPath).ToArray();
 			blueball = ExtractBallsFromGivenXPath(blueBallsXPath).ToArray();
-
+			date = document.DocumentNode.SelectSingleNode("(//div[@class='game-main-header'])[1]//p[@class='sg__desc-title']").InnerText;
 		}
 
 		private static List<int> ExtractBallsFromGivenXPath(string xpath)
